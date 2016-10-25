@@ -1,8 +1,9 @@
 import React from 'react';
-import {Text,View} from 'react-native';
+import {Text,View,ListView,RefreshControl} from 'react-native';
 import Login from '../modules/Login';
 import {connect} from 'react-redux';
 import {login} from '../actions/IndexAction';/**/
+import styles from '../styles/Common';
 /** 
  * Created with IntelliJ IDEA. 
  * User: east 
@@ -12,23 +13,55 @@ import {login} from '../actions/IndexAction';/**/
 class App extends React.Component {
     constructor(props) {
         super(props);
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.initData = ['row 1', 'row 2'];
+        this.state = {
+            dataSource: this.ds.cloneWithRows(this.initData),
+            isRefreshing:false
+        };
 
-    }
-
-    componentDidMount(){
-        // this.props.dispatch(login())/**/
+        console.log(this.state.dataSource,"----");
     }
 
     render() {
-        console.log(this.props.LoginInfo,"//////");
         return (
-            <View>
-                <Text>
-                   HEllp
-                </Text>
+            <View style={styles.test}>
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(rowData) => this.showData(rowData)}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={()=>this._onRefresh()}
+                            tintColor="#ff0000"
+                            title="Loading..."
+                            titleColor="#00ff00"
+                            colors={['#ff0000', '#00ff00', '#0000ff']}
+                            progressBackgroundColor="#ffff00"
+                        />}
+                />
             </View>
         )
     }
+
+
+    showData(rowData){
+        return (
+            <View style={styles.listView}>
+                <Text style={[styles.listViewText]}>{rowData}</Text>
+            </View>
+        );
+    }
+
+    _onRefresh(){
+        this.initData = this.initData.concat(["newRow"]);
+        // let sources = this.initData.concat(["row"]);
+        console.log(this.initData,"........");
+        let newData =this.ds.cloneWithRows(this.initData);
+        console.log("刷新了");
+        this.setState({dataSource:newData});
+    }
+
 };
 
 export default connect(
