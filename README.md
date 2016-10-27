@@ -8,6 +8,10 @@
 git clone 
 npm install
 ```
+##图标设置
+```
+rnpm link
+```
 ##运行IOS
 ```
 react-native run-ios
