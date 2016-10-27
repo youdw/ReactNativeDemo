@@ -1,7 +1,7 @@
 # ReactNativeDemo
 
 ##运行效果
-<img src="./screenshot/1.png" width = "300" height = "600"  align=center />
+<img src="./screenshot/1.png" width = "300" height = "500"  align=center />
 
 ##安装
 ```
