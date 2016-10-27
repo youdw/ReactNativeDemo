@@ -5,7 +5,7 @@
 
 ##安装
 ```
-git clone 
+git clone https://github.com/youdw/ReactNativeDemo.git
 npm install
 ```
 ##图标设置
